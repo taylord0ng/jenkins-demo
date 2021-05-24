@@ -6,7 +6,7 @@ podTemplate(yaml: """\
         alibabacloud.com/eci: 'true'
     spec:
       containers:
-      - name: exchange
+      - name: maven
         image: registry-vpc.ap-southeast-1.aliyuncs.com/dipbit/exchange:maven-3.6.3-jdk-11-alpine-3.12
         resources:
           limits:
@@ -27,6 +27,7 @@ podTemplate(yaml: """\
     ]
 )
     node(POD_LABEL) {
+	  stages{container('maven'){
         stage('clean workspace'){
             deleteDir()
         }
@@ -46,6 +47,6 @@ podTemplate(yaml: """\
         stage('deploy') {
 			echo "deploy"
             sh 'sleep 120'
-        }
+        }}}
     }
 }

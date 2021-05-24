@@ -8,6 +8,13 @@ podTemplate(yaml: """\
       containers:
       - name: golang
         image: golang:1.8.0
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "256m"
+            memory: "256Mi"
         command:
         - cat
         tty: true

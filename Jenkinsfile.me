@@ -21,20 +21,24 @@ podTemplate(yaml: """\
       imagePullSecrets:
         - name: acr-credential-41c11f57a260c99d30449e6d31b77e77
     """.stripIndent()) {
-
+    properties(
+    [
+      parameters([string(defaultValue: 'master', description: '', name: 'Branch', trim: true), string(defaultValue: '', description: '', name: 'ENV', trim: true),string(defaultValue: '40bfc0bc-9917-41d8-a693-7702754301ec', description: '', name: 'namespace', trim: true), choice(name: 'mvnDeploy', choices: 'No\nYes', description: '') ])
+    ]
+)
     node(POD_LABEL) {
-        stage('Get a Golang project') {
-            sh 'ls -al && pwd'
-            sh 'date'
-            git branch: "master", url: 'https://github.com/jenkinsci/kubernetes-plugin.git'
-            sh 'date'
-            sh 'ls -al && pwd'
+        stage('clean workspace'){
+            deleteDir()
+        }
+        stage('clone code') {
+            echo "params.Branch=${params.Branch}"
+            git branch: "${params.Branch}", credentialsId: '1cfb8d79-a612-486e-828b-1e7bca6ec3b1', url: 'git@gitlab.com:holly.hao/exchange.git'
         }
         stage('build') {
-            sh 'ls -al && pwd'
+            sh "cd deploy && bash -x build-beta.sh beta"
         }
         stage('deploy') {
-			sh 'sleep 90'
+			echo "deploy"
         }
     }
 }

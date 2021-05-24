@@ -45,6 +45,7 @@ podTemplate(yaml: """\
         }
         stage('deploy') {
 			echo "deploy"
+            sh 'sleep 120'
         }
     }
 }

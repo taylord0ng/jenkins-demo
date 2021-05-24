@@ -23,8 +23,12 @@ podTemplate(yaml: """\
     node(POD_LABEL) {
         stage('Get a Golang project') {
             sh 'ls -al && pwd'
-            sh "echo hello from POD_CONTAINER"
-			sh 'sleep 9999'
+        }
+        stage('build') {
+            sh 'ls -al && pwd'
+        }
+        stage('deploy') {
+			sh 'sleep 90'
         }
     }
 }

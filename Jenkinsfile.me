@@ -23,7 +23,10 @@ podTemplate(yaml: """\
     node(POD_LABEL) {
         stage('Get a Golang project') {
             sh 'ls -al && pwd'
-            git 'https://github.com/jenkinsci/kubernetes-plugin.git'
+            sh 'date'
+            git branch: master, url: 'https://github.com/jenkinsci/kubernetes-plugin.git'
+            sh 'date'
+            sh 'ls -al && pwd'
         }
         stage('build') {
             sh 'ls -al && pwd'

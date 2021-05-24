@@ -35,7 +35,8 @@ podTemplate(yaml: """\
             sh "chmod +x deploy/ossutil64"
             sh '''
                 sed -i "s/\\/root\\/dipbit\\/apache-maven-3.6.3\\/bin\\///g" deploy/build-beta.sh
-                sed -i "s/nexus.marathon.l4lb.thisdcos.directory:8081\\/service\\/nexus/nexus-svc.kube-public.svc.kiki.local:8081/g" pom.xml
+                #sed -i "s/nexus.marathon.l4lb.thisdcos.directory:8081\\/service\\/nexus/nexus-svc.kube-public.svc.kiki.local:8081/g" pom.xml
+                sed -i "s/nexus.marathon.l4lb.thisdcos.directory:8081\\/service\\/nexus/nexus.dipbit.xyz/g" pom.xml
                '''
             writeFile file: 'settings.xml', text: '<settings> <servers> <server> <id>releases</id> <username>admin</username> <password>admin123</password> </server> <server> <id>snapshot</id> <username>admin</username> <password>admin123</password> </server> <server> <id>maven-releases</id> <username>admin</username> <password>admin123</password> </server> <server> <id>maven-snapshots</id> <username>admin</username> <password>admin123</password> </server> </servers> </settings>'
             sh "ls && cat settings.xml && cd deploy && bash -x build-beta.sh beta"

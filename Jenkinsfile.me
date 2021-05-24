@@ -18,13 +18,15 @@ podTemplate(yaml: """\
         command:
         - cat
         tty: true
+      imagePullSecrets:
+        - name: acr-credential-41c11f57a260c99d30449e6d31b77e77
     """.stripIndent()) {
 
     node(POD_LABEL) {
         stage('Get a Golang project') {
             sh 'ls -al && pwd'
             sh 'date'
-            git branch: master, url: 'https://github.com/jenkinsci/kubernetes-plugin.git'
+            git branch: "master", url: 'https://github.com/jenkinsci/kubernetes-plugin.git'
             sh 'date'
             sh 'ls -al && pwd'
         }

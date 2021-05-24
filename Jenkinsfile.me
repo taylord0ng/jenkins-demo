@@ -6,15 +6,15 @@ podTemplate(yaml: """\
         alibabacloud.com/eci: 'true'
     spec:
       containers:
-      - name: golang
-        image: golang:1.8.0
+      - name: exchange
+        image: registry-vpc.ap-southeast-1.aliyuncs.com/dipbit/exchange:maven-3.6.3-jdk-11-alpine-3.12
         resources:
           limits:
-            cpu: "500m"
-            memory: "512Mi"
+            cpu: "2"
+            memory: "4Gi"
           requests:
-            cpu: "256m"
-            memory: "256Mi"
+            cpu: "1"
+            memory: "2Gi"
         command:
         - cat
         tty: true

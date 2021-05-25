@@ -15,11 +15,18 @@ podTemplate(yaml: """\
           requests:
             cpu: "1"
             memory: "2Gi"
+        volumeMounts:
+          - mountPath: /root/.m2/
+            name: volume-m2-data
         command:
         - cat
         tty: true
       imagePullSecrets:
         - name: acr-credential-41c11f57a260c99d30449e6d31b77e77
+      volumes:
+        - name: volume-m2-data
+          persistentVolumeClaim:
+            claimName: jenkins-m2-vol
     """.stripIndent()) {
 
     properties(

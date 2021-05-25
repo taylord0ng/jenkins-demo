@@ -10,11 +10,11 @@ podTemplate(yaml: """\
         image: registry-vpc.ap-southeast-1.aliyuncs.com/dipbit/exchange:maven-3.6.3-jdk-11-alpine-3.12
         resources:
           limits:
-            cpu: "2"
-            memory: "4Gi"
+            cpu: "4"
+            memory: "8Gi"
           requests:
-            cpu: "1"
-            memory: "2Gi"
+            cpu: "4"
+            memory: "8Gi"
         volumeMounts:
           - mountPath: /root/.m2/
             name: volume-m2-data

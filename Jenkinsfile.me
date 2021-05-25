@@ -2,6 +2,7 @@ podTemplate(yaml: """\
     apiVersion: v1
     kind: Pod
     metadata:
+      namespace: kube-public
       labels: 
         alibabacloud.com/eci: 'true'
     spec:

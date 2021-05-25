@@ -55,7 +55,7 @@ podTemplate(yaml: """\
                 #sed -i "s/nexus.marathon.l4lb.thisdcos.directory:8081\\/service\\/nexus/nexus.dipbit.xyz/g" pom.xml
             '''
             writeFile file: 'settings.xml', text: '<settings> <servers> <server> <id>releases</id> <username>admin</username> <password>admin123</password> </server> <server> <id>snapshot</id> <username>admin</username> <password>admin123</password> </server> <server> <id>maven-snapshots</id> <username>admin</username> <password>admin123</password> </server> <server> <id>maven-releases</id> <username>admin</username> <password>admin123</password> </server> </servers> </settings>'
-            sh "mv settings.xml ~/.m2 && cd deploy && bash -x build-beta.sh beta"
+            sh "apk add zip && mv settings.xml ~/.m2 && cd deploy && bash -x build-beta.sh beta"
         }
       }
     }

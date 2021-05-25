@@ -29,9 +29,10 @@ podTemplate(yaml: """\
     node(POD_LABEL) {
         stage('build exchange'){
           container('maven') {
-            deleteDir()
-            echo "params.Branch=${params.Branch}"
-            git branch: "${params.Branch}", credentialsId: '1cfb8d79-a612-486e-828b-1e7bca6ec3b1', url: 'git@gitlab.com:holly.hao/exchange.git'
+            stage('clean') {deleteDir()}
+            stage('clone code'){echo "params.Branch=${params.Branch}"
+            git branch: "${params.Branch}", credentialsId: '1cfb8d79-a612-486e-828b-1e7bca6ec3b1', url: 'git@gitlab.com:holly.hao/exchange.git'}
+            stage('Build'){
             sh "chmod +x deploy/ossutil64"
             sh '''
                 sed -i "s/\\/root\\/dipbit\\/apache-maven-3.6.3\\/bin\\///g" deploy/build-beta.sh
@@ -40,7 +41,7 @@ podTemplate(yaml: """\
                '''
             writeFile file: 'settings.xml', text: '<settings> <servers> <server> <id>releases</id> <username>admin</username> <password>admin123</password> </server> <server> <id>snapshot</id> <username>admin</username> <password>admin123</password> </server> <server> <id>maven-snapshots</id> <username>admin</username> <password>admin123</password> </server> <server> <id>maven-releases</id> <username>admin</username> <password>admin123</password> </server> </servers> </settings>'
             sh "mkdir -p ~/.m2 && mv settings.xml ~/.m2 && cd deploy && bash -x build-beta.sh beta"
-          }
+          }}
         }
     }
 }
